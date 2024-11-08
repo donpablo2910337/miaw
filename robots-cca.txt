@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /index.php
+Sitemap: https://www.cca.edu.bo/sitemap.xml
