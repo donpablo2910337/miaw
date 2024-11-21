@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /index.php
+Disallow:
+
+Sitemap: https://ead.utramig.mg.gov.br/sitemap.xml
