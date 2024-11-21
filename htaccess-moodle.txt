@@ -1,0 +1,45 @@
+# Enable mod_rewrite for clean URLs
+RewriteEngine On
+
+# Ensure RewriteBase is set to the Moodle directory
+# If Moodle is in a subdirectory, set RewriteBase to that subdirectory
+# Example: RewriteBase /moodle
+RewriteBase /
+
+# Redirect all requests to index.php if the requested file or directory doesn't exist
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+
+# Security rules to block access to sensitive files
+<Files config.php>
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+<Files install.php>
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+<Files upgrade.php>
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Additional settings for performance and caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# Prevent access to .htaccess files
+<Files ~ "^\.ht">
+    Order Allow,Deny
+    Deny from all
+</Files>
